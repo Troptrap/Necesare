@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Necesar Materiale</title>
+    <!-- FontAwesome pentru pictograme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm 10mm 12mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            margin: 0;
+            padding: 20px 10px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Simularea foii A4 */
+        .page-sheet {
+            background: #ffffff;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 12mm 15mm 12mm 15mm;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Toolbar Superior Controale */
+        .ui-toolbar {
+            max-width: 210mm;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toolbar-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toolbar-select {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .toolbar-select:focus {
+            border-color: #2563eb;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Antet Document */
+        .doc-header {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr 1fr;
+            align-items: start;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .company-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1e3a8a;
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            padding: 2px 4px;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+
+        .company-title:hover, .company-title:focus {
+            border-bottom-color: #2563eb;
+            background-color: #f8fafc;
+        }
+
+        .header-center {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .doc-title-main {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+        }
+
+        .header-meta-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .header-input-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .header-input-row label {
+            font-weight: 600;
+            color: #334155;
+            white-space: nowrap;
+        }
+
+        .header-input-row input {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            padding: 2px 4px;
+            outline: none;
+            background: transparent;
+            text-align: center;
+            width: 65%;
+            transition: border-color 0.2s;
+        }
+
+        .header-input-row input:focus {
+            border-bottom-color: #2563eb;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .approved-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .approved-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-transform: uppercase;
+        }
+
+        .approved-role-input {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            padding: 2px 0;
+            outline: none;
+            background: transparent;
+            text-align: right;
+            width: 120px;
+        }
+
+        .approved-space {
+            height: 40px;
+            width: 100%;
+        }
+
+        /* Container Tabel & Tabel */
+        .table-container {
+            flex-grow: 1;
+            margin-top: 5px;
+            position: relative;
+        }
+
+        table.necesar-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table.necesar-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            border: 1px solid #cbd5e1;
+            padding: 7px 4px;
+            text-align: center;
+        }
+
+        table.necesar-table td {
+            border: 1px solid #cbd5e1;
+            padding: 3px 5px;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .col-nr { width: 36px; text-align: center; font-weight: 600; color: #64748b; font-size: 12px; }
+        .col-produs { width: auto; position: relative; }
+        .col-cant { width: 75px; }
+        .col-um { width: 60px; }
+        .col-termen { width: 110px; }
+        .col-obs { width: 130px; }
+
+        .table-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #0f172a;
+            box-sizing: border-box;
+            padding: 3px 2px;
+        }
+
+        .table-textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #0f172a;
+            resize: none;
+            overflow: hidden;
+            display: block;
+            line-height: 1.35;
+            padding: 2px 0;
+            box-sizing: border-box;
+            min-height: 18px;
+        }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+
+        /* Autocomplete */
+        .autocomplete-suggestions {
+            position: absolute;
+            z-index: 1000;
+            background: #ffffff;
+            border: 1px solid #2563eb;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: 180px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 8px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .suggestion-item:hover, .suggestion-item.selected {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* Subsol & Semnături */
+        .footer-section {
+            margin-top: 10px;
+            padding-top: 5px;
+        }
+
+        .signatures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 15px;
+        }
+
+        .sig-box {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sig-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sig-name-input {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            padding: 4px 2px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .sig-name-input:focus {
+            border-bottom-color: #2563eb;
+        }
+
+        /* Zone Drag & Drop Semnături */
+        .sig-dropzone {
+            margin-top: 4px;
+            height: 50px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 6px;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .sig-dropzone:hover, .sig-dropzone.dragover {
+            border-color: #2563eb;
+            background-color: #f0f6ff;
+        }
+
+        .sig-dropzone p {
+            margin: 0;
+            font-size: 11px;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .sig-dropzone i {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            pointer-events: none;
+        }
+
+        /* Ascunde textul și pictograma din dropzone dacă imaginea este încărcată în ecran normal */
+        .sig-dropzone.has-image i,
+        .sig-dropzone.has-image p {
+            display: none !important;
+        }
+
+        .sig-preview-img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .sig-dropzone.has-image .sig-preview-img {
+            display: block;
+        }
+
+        .sig-remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .sig-dropzone:hover .sig-remove-btn {
+            display: flex;
+        }
+
+        /* Secțiunea Dată */
+        .date-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            width: 45%;
+        }
+
+        .date-section input[type="date"], .date-section input[type="text"] {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            padding: 3px 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            outline: none;
+            background: transparent;
+        }
+
+        /* Stiluri Printare A4 */
+        @media print {
+            body {
+                background: transparent;
+                padding: 0;
+            }
+
+            .ui-toolbar {
+                display: none !important;
+            }
+
+            .page-sheet {
+                box-shadow: none;
+                border-radius: 0;
+                width: 100%;
+                min-height: 90vh;
+                padding: 0;
+                margin: 0;
+            }
+
+            .company-title:hover, .company-title:focus,
+            .header-input-row input,
+            .approved-role-input,
+            .sig-name-input,
+            .date-section input {
+                border-bottom: none !important;
+                background: transparent !important;
+            }
+
+            /* CORECȚIE PRINT DROPZONE & SEMNĂTURI */
+            /* Dacă NU există imagine încărcată, ascunde complet zona dropzone la printare */
+            .sig-dropzone:not(.has-image) {
+                display: none !important;
+            }
+
+            /* Dacă există imagine, elimină fundalul și bordura și păstrează doar imaginea */
+            .sig-dropzone.has-image {
+                border: none !important;
+                background: transparent !important;
+                height: 50px !important;
+                margin-top: 0 !important;
+            }
+
+            .sig-dropzone p, 
+            .sig-dropzone i, 
+            .sig-remove-btn {
+                display: none !important;
+            }
+
+            .sig-preview-img {
+                display: block !important;
+                max-height: 50px !important;
+            }
+
+            table.necesar-table th {
+                background-color: #f8fafc !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .autocomplete-suggestions {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bară de Controale UI -->
+    <div class="ui-toolbar">
+        <div class="toolbar-group">
+            <label class="toolbar-label">
+                <i class="fa-solid fa-list-ol"></i> Rânduri tabel:
+                <select id="rowCountSelect" class="toolbar-select" onchange="changeRowCount(this.value)">
+                    <option value="12">12 rânduri (text lung / încăpător)</option>
+                    <option value="15">15 rânduri</option>
+                    <option value="18" selected>18 rânduri (Standard)</option>
+                    <option value="22">22 rânduri</option>
+                </select>
+            </label>
+            <button class="btn btn-secondary" onclick="clearTableInputs()">
+                <i class="fa-solid fa-rotate-left"></i> Golește Tabel
+            </button>
+        </div>
+
+        <div class="toolbar-group">
+            <button class="btn btn-primary" onclick="window.print()">
+                <i class="fa-solid fa-print"></i> Printează / Salvează PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Document A4 Imprimabil -->
+    <div class="page-sheet">
+        <div>
+            <!-- Antet -->
+            <div class="doc-header">
+                <!-- Stânga: Nume Firmă -->
+                <div class="header-left">
+                    <div class="company-title" contenteditable="true" id="companyName" onblur="saveState()">
+                        SC FIRMA SRL
+                    </div>
+                </div>
+
+                <!-- Centru: Titlu & Câmpuri Proiect / Contract -->
+                <div class="header-center">
+                    <h1 class="doc-title-main">NECESAR MATERIALE</h1>
+                    <div class="header-meta-group">
+                        <div class="header-input-row">
+                            <label for="projectName">Denumire proiect:</label>
+                            <input type="text" id="projectName" placeholder="Ex: Amenajare Spațiu Commercial" oninput="saveState()">
+                        </div>
+                        <div class="header-input-row">
+                            <label for="contractRef">Nr. / Data contract:</label>
+                            <input type="text" id="contractRef" placeholder="Ex: 104 / 12.02.2026" oninput="saveState()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dreapta: Caseta Aprobat -->
+                <div class="header-right">
+                    <div class="approved-box">
+                        <span class="approved-title">Aprobat,</span>
+                        <input type="text" class="approved-role-input" id="approvedRole" value="Director" oninput="saveState()">
+                        <div class="approved-space"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabelul de Materiale -->
+            <div class="table-container">
+                <table class="necesar-table">
+                    <thead>
+                        <tr>
+                            <th class="col-nr">Nr.</th>
+                            <th class="col-produs">Denumire Produs / Material</th>
+                            <th class="col-cant">Cant.</th>
+                            <th class="col-um">U.M.</th>
+                            <th class="col-termen">Termen Aprov.</th>
+                            <th class="col-obs">Observații</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Populat dinamic JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Datalist pentru Unități de Măsură -->
+        <datalist id="umList">
+            <option value="buc">
+            <option value="kg">
+            <option value="l">
+            <option value="m">
+            <option value="ml">
+            <option value="m²">
+            <option value="m³">
+            <option value="set">
+            <option value="pachet">
+            <option value="rola">
+            <option value="cutie">
+            <option value="sac">
+        </datalist>
+
+        <!-- Subsol / Semnături și Dată -->
+        <div class="footer-section">
+            <div class="signatures-grid">
+                <!-- Caseta Întocmit -->
+                <div class="sig-box">
+                    <div class="sig-title">Întocmit:</div>
+                    <input type="text" class="sig-name-input" id="sigIntocmit" placeholder="Nume şi Prenume" oninput="saveState()">
+                    <div class="sig-dropzone" onclick="triggerSignatureUpload('intocmitFile')" id="dropzoneIntocmit">
+                        <i class="fa-solid fa-signature"></i>
+                        <p>Click sau Drag & Drop semnătură (PNG)</p>
+                        <img id="previewIntocmit" class="sig-preview-img" alt="Semnatura Intocmit">
+                        <button class="sig-remove-btn" onclick="removeSignature(event, 'Intocmit')">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <input type="file" id="intocmitFile" accept="image/*" style="display:none" onchange="handleSignatureSelect(this, 'Intocmit')">
+                </div>
+
+                <!-- Caseta Verificat -->
+                <div class="sig-box">
+                    <div class="sig-title">Verificat:</div>
+                    <input type="text" class="sig-name-input" id="sigVerificat" placeholder="Nume şi Prenume" oninput="saveState()">
+                    <div class="sig-dropzone" onclick="triggerSignatureUpload('verificatFile')" id="dropzoneVerificat">
+                        <i class="fa-solid fa-signature"></i>
+                        <p>Click sau Drag & Drop semnătură (PNG)</p>
+                        <img id="previewVerificat" class="sig-preview-img" alt="Semnatura Verificat">
+                        <button class="sig-remove-btn" onclick="removeSignature(event, 'Verificat')">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <input type="file" id="verificatFile" accept="image/*" style="display:none" onchange="handleSignatureSelect(this, 'Verificat')">
+                </div>
+            </div>
+
+            <!-- Randul de Dată -->
+            <div class="date-section">
+                <label for="docDate"><i class="fa-regular fa-calendar-days"></i> Data:</label>
+                <input type="text" id="docDate" placeholder="ZZ.LL.AAAA">
+            </div>
+        </div>
+    </div>
+
+    <!-- Container Autocomplete plutitor -->
+    <div id="autocompleteBox" class="autocomplete-suggestions"></div>
+
+    <script src="produse.js"></script>
+
+    <script>
+        if (!window.PRODUSE || !Array.isArray(window.PRODUSE)) {
+            window.PRODUSE = [
+                "Ciment Structo Plus 40kg",
+                "Adesiv gresie și faianță CM11 25kg",
+                "Gips carton standard 12.5mm 1200x2500mm",
+                "Gips carton RBI rezistent la umiditate 12.5mm",
+                "Profil metalic CD60 / 3m",
+                "Profil metalic UD28 / 3m",
+                "Vopsea lavabilă albă interior 15L",
+                "Amorsă perete concentrată 5L",
+                "Șuruburi autoforante gips carton 3.5x25mm (1000 buc/cutie)",
+                "Dibluri montaj rapid 6x40mm",
+                "Spumă poliuretanică tub 750ml",
+                "Silicon universal transparent 310ml",
+                "Banda îmbinare gips carton din fibră de sticlă 50m",
+                "Glet de încărcare Adefix 20kg",
+                "Glet de finisaj Super Finish 20kg",
+                "Parchet laminat 8mm trafic intens",
+                "Plintă parchet PVC cu canal cablu 2.5m",
+                "Șapă autonivelantă 25kg",
+                "Țeavă PPR diametru 20mm PN20",
+                "Mufă PPR 20mm",
+                "Cot PPR 90 grade 20mm",
+                "Cablu electric CYYY 3x1.5 kmp",
+                "Cablu electric CYYY 3x2.5 kmp",
+                "Doză aparat modulară 3 module",
+                "Întrerupător simplu alb",
+                "Priză dublă cu împământare albă",
+                "Bec LED E27 10W lumină caldă",
+                "Bandă izolatoare electrică neagră"
+            ];
+        }
+
+        let currentRowCount = 18;
+        let activeInput = null;
+        let selectedIndex = -1;
+        let currentMatches = [];
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.max(18, textarea.scrollHeight) + 'px';
+        }
+
+        function renderTable(rows) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            for (let i = 1; i <= rows; i++) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="col-nr">${i}</td>
+                    <td class="col-produs">
+                        <textarea class="table-textarea product-input" rows="1" oninput="handleProductInput(this)" onfocus="handleProductFocus(this)" onkeydown="handleKeyDown(event)"></textarea>
+                    </td>
+                    <td class="col-cant">
+                        <input type="number" step="any" class="table-input text-right">
+                    </td>
+                    <td class="col-um">
+                        <input type="text" class="table-input text-center" list="umList" autocomplete="off">
+                    </td>
+                    <td class="col-termen">
+                        <input type="text" class="table-input text-center">
+                    </td>
+                    <td class="col-obs">
+                        <textarea class="table-textarea" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function changeRowCount(count) {
+            currentRowCount = parseInt(count, 10);
+            renderTable(currentRowCount);
+        }
+
+        function normalizeStr(text) {
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        function handleProductInput(textarea) {
+            autoResizeTextarea(textarea);
+            activeInput = textarea;
+            showAutocomplete(textarea);
+        }
+
+        function handleProductFocus(textarea) {
+            autoResizeTextarea(textarea);
+            activeInput = textarea;
+            if (textarea.value.trim().length >= 2) {
+                showAutocomplete(textarea);
+            }
+        }
+
+        function showAutocomplete(textarea) {
+            const val = textarea.value.trim();
+            const autoBox = document.getElementById('autocompleteBox');
+
+            if (val.length < 2 || window.PRODUSE.length === 0) {
+                autoBox.style.display = 'none';
+                return;
+            }
+
+            const normalizedVal = normalizeStr(val);
+            currentMatches = window.PRODUSE.filter(item => 
+                normalizeStr(item).includes(normalizedVal)
+            ).slice(0, 10);
+
+            if (currentMatches.length === 0) {
+                autoBox.style.display = 'none';
+                return;
+            }
+
+            const rect = textarea.getBoundingClientRect();
+            autoBox.style.top = (rect.bottom + window.scrollY) + 'px';
+            autoBox.style.left = (rect.left + window.scrollX) + 'px';
+            autoBox.style.width = rect.width + 'px';
+            autoBox.innerHTML = '';
+            selectedIndex = -1;
+
+            currentMatches.forEach((match, index) => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.innerText = match;
+                div.onmousedown = function(e) {
+                    e.preventDefault();
+                    selectProduct(match);
+                };
+                autoBox.appendChild(div);
+            });
+
+            autoBox.style.display = 'block';
+        }
+
+        function selectProduct(name) {
+            if (activeInput) {
+                activeInput.value = name;
+                autoResizeTextarea(activeInput);
+            }
+            hideAutocomplete();
+        }
+
+        function hideAutocomplete() {
+            const autoBox = document.getElementById('autocompleteBox');
+            autoBox.style.display = 'none';
+            autoBox.innerHTML = '';
+            selectedIndex = -1;
+        }
+
+        function handleKeyDown(e) {
+            const autoBox = document.getElementById('autocompleteBox');
+            if (autoBox.style.display !== 'block') return;
+
+            const items = autoBox.querySelectorAll('.suggestion-item');
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % items.length;
+                updateSelection(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                updateSelection(items);
+            } else if (e.key === 'Enter') {
+                if (selectedIndex >= 0 && selectedIndex < currentMatches.length) {
+                    e.preventDefault();
+                    selectProduct(currentMatches[selectedIndex]);
+                }
+            } else if (e.key === 'Escape' || e.key === 'Tab') {
+                hideAutocomplete();
+            }
+        }
+
+        function updateSelection(items) {
+            items.forEach((item, index) => {
+                if (index === selectedIndex) {
+                    item.classList.add('selected');
+                    item.scrollIntoView({ block: 'nearest' });
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        function triggerSignatureUpload(fileInputId) {
+            document.getElementById(fileInputId).click();
+        }
+
+        function handleSignatureSelect(input, target) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (!file.type.startsWith('image/')) {
+                    alert('Vă rugăm să selectați un fișier imagine.');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    const imgElement = document.getElementById('preview' + target);
+                    const dropzone = document.getElementById('dropzone' + target);
+
+                    imgElement.src = dataUrl;
+                    dropzone.classList.add('has-image');
+
+                    localStorage.setItem('necesar_sig_' + target.toLowerCase(), dataUrl);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeSignature(event, target) {
+            event.stopPropagation();
+            const imgElement = document.getElementById('preview' + target);
+            const dropzone = document.getElementById('dropzone' + target);
+
+            imgElement.src = '';
+            dropzone.classList.remove('has-image');
+            document.getElementById(target.toLowerCase() + 'File').value = '';
+            localStorage.removeItem('necesar_sig_' + target.toLowerCase());
+        }
+
+        function setupDragAndDrop(dropzoneId, fileInputId, target) {
+            const dropzone = document.getElementById(dropzoneId);
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('dragover');
+                }, false);
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files && files[0]) {
+                    const fileInput = document.getElementById(fileInputId);
+                    fileInput.files = files;
+                    handleSignatureSelect(fileInput, target);
+                }
+            });
+        }
+
+        function saveState() {
+            localStorage.setItem('necesar_company', document.getElementById('companyName').innerText);
+            localStorage.setItem('necesar_project', document.getElementById('projectName').value);
+            localStorage.setItem('necesar_contract', document.getElementById('contractRef').value);
+            localStorage.setItem('necesar_approved_role', document.getElementById('approvedRole').value);
+            localStorage.setItem('necesar_intocmit_name', document.getElementById('sigIntocmit').value);
+            localStorage.setItem('necesar_verificat_name', document.getElementById('sigVerificat').value);
+        }
+
+        function loadState() {
+            if (localStorage.getItem('necesar_company')) {
+                document.getElementById('companyName').innerText = localStorage.getItem('necesar_company');
+            }
+            if (localStorage.getItem('necesar_project')) {
+                document.getElementById('projectName').value = localStorage.getItem('necesar_project');
+            }
+            if (localStorage.getItem('necesar_contract')) {
+                document.getElementById('contractRef').value = localStorage.getItem('necesar_contract');
+            }
+            if (localStorage.getItem('necesar_approved_role')) {
+                document.getElementById('approvedRole').value = localStorage.getItem('necesar_approved_role');
+            }
+            if (localStorage.getItem('necesar_intocmit_name')) {
+                document.getElementById('sigIntocmit').value = localStorage.getItem('necesar_intocmit_name');
+            }
+            if (localStorage.getItem('necesar_verificat_name')) {
+                document.getElementById('sigVerificat').value = localStorage.getItem('necesar_verificat_name');
+            }
+
+            ['intocmit', 'verificat'].forEach(target => {
+                const sigData = localStorage.getItem('necesar_sig_' + target);
+                const capitalized = target.charAt(0).toUpperCase() + target.slice(1);
+                if (sigData) {
+                    const imgElement = document.getElementById('preview' + capitalized);
+                    const dropzone = document.getElementById('dropzone' + capitalized);
+                    imgElement.src = sigData;
+                    dropzone.classList.add('has-image');
+                }
+            });
+
+            const today = new Date();
+            const dateStr = String(today.getDate()).padStart(2, '0') + '.' +
+                            String(today.getMonth() + 1).padStart(2, '0') + '.' +
+                            today.getFullYear();
+            document.getElementById('docDate').value = dateStr;
+        }
+
+        function clearTableInputs() {
+            if (confirm("Sigur dorești să ștergi toate datele introduse în tabel?")) {
+                renderTable(currentRowCount);
+                hideAutocomplete();
+            }
+        }
+
+        window.onload = function() {
+            renderTable(currentRowCount);
+            loadState();
+
+            setupDragAndDrop('dropzoneIntocmit', 'intocmitFile', 'Intocmit');
+            setupDragAndDrop('dropzoneVerificat', 'verificatFile', 'Verificat');
+
+            window.addEventListener('scroll', hideAutocomplete);
+            document.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('product-input')) {
+                    hideAutocomplete();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
