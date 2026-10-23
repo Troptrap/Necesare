@@ -360,8 +360,8 @@
 
         /* Subsol & Semnături */
         .footer-section {
-            margin-top: 20px;
-            padding-top: 10px;
+            margin-top: 2px;
+            padding-top: 1px;
         }
 
         .signatures-grid {
@@ -557,9 +557,9 @@
                 <select id="rowCountSelect" class="toolbar-select" onchange="changeRowCount(this.value)">
                     <option value="12">12 rânduri (text lung / încăpător)</option>
                     <option value="15">15 rânduri</option>
-                    <option value="18">18 rânduri (Standard)</option>
+                    <option value="18" selected>18 rânduri (Standard)</option>
                     <option value="22">22 rânduri</option>
-                    <option value="24" selected>24 rânduri</option>
+                
                 </select>
             </label>
             <button class="btn btn-secondary" onclick="clearTableInputs()">
@@ -584,7 +584,7 @@
                     <div class="company-title" contenteditable="true" id="companyName" onblur="saveState()">
                         SC FIRMA SRL
                     </div>
-                    <div class="company-subtitle">Formular Intern de Achiziții</div>
+                    
                 </div>
 
                 <!-- Centru: Titlu & Câmpuri Proiect / Contract -->
@@ -606,7 +606,7 @@
                 <div class="header-right">
                     <div class="approved-box">
                         <span class="approved-title">Aprobat,</span>
-                        <input type="text" class="approved-role-input" id="approvedRole" value="Director General" oninput="saveState()">
+                        <input type="text" class="approved-role-input" id="approvedRole" value="Director" oninput="saveState()">
                         <div class="approved-space"></div>
                     </div>
                 </div>
