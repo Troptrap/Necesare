@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Necesar Materiale</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 12mm 15mm;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Paper sheet styling for screen */
+        .page-sheet {
+            background: #ffffff;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 15mm 15mm 12mm 15mm;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Controls / Action Toolbar */
+        .no-print-bar {
+            max-width: 210mm;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Document Header */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .company-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3a8a;
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            padding: 2px 4px;
+            transition: border 0.2s;
+        }
+
+        .company-title:hover, .company-title:focus {
+            border-bottom-color: #2563eb;
+            background-color: #f8fafc;
+        }
+
+        .doc-title {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0f172a;
+            margin: 10px 0 15px 0;
+        }
+
+        .doc-title h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .doc-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .meta-field {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-field input {
+            border: none;
+            border-bottom: 1px solid #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            color: #111827;
+            padding: 2px 4px;
+            outline: none;
+            background: transparent;
+        }
+
+        /* Table Design */
+        .table-container {
+            flex-grow: 1;
+        }
+
+        table.necesar-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        table.necesar-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            border: 1px solid #cbd5e1;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        table.necesar-table td {
+            border: 1px solid #cbd5e1;
+            padding: 4px 6px;
+            vertical-align: middle;
+        }
+
+        /* Table Inputs & Multiline Textareas */
+        .table-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 12px;
+            font-family: inherit;
+            color: #1f2937;
+            box-sizing: border-box;
+        }
+
+        .table-textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 12px;
+            font-family: inherit;
+            color: #1f2937;
+            resize: none;
+            overflow: hidden;
+            display: block;
+            line-height: 1.4;
+            padding: 2px 0;
+            box-sizing: border-box;
+        }
+
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+
+        /* Column Widths */
+        .col-nr { width: 38px; text-align: center; font-weight: 600; color: #64748b; }
+        .col-produs { width: auto; }
+        .col-um { width: 55px; }
+        .col-cant { width: 75px; }
+        .col-obs { width: 150px; }
+
+        /* Professional Signatures Footer */
+        .signatures-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .sig-box {
+            width: 42%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sig-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sig-name-input {
+            border: none;
+            border-bottom: 1px solid #cbd5e1;
+            padding: 4px 0;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .sig-name-input:focus {
+            border-bottom-color: #2563eb;
+        }
+
+        .sig-line-area {
+            margin-top: 8px;
+            height: 45px;
+            border-bottom: 1px dashed #94a3b8;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 4px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .no-print-bar {
+                display: none !important;
+            }
+
+            .page-sheet {
+                box-shadow: none;
+                border-radius: 0;
+                width: 100%;
+                min-height: 100vh;
+                padding: 0;
+                margin: 0;
+            }
+
+            .company-title:hover, .company-title:focus,
+            .sig-name-input, .meta-field input {
+                border-bottom: none !important;
+                background: transparent !important;
+            }
+
+            .sig-name-input::placeholder {
+                color: transparent;
+            }
+
+            .sig-line-area {
+                border-bottom: 1px solid #000;
+            }
+
+            table.necesar-table th {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Controls Toolbar -->
+    <div class="no-print-bar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <label style="font-size: 13px; font-weight: 600; color: #4b5563;">
+                Linii tabel:
+                <select id="rowCountSelect" onchange="changeRowCount(this.value)" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #d1d5db; margin-left: 4px;">
+                    <option value="12">12 linii (pentru text mai lung)</option>
+                    <option value="15">15 linii</option>
+                    <option value="18" selected>18 linii (Standard)</option>
+                    <option value="22">22 linii</option>
+                </select>
+            </label>
+            <button class="btn btn-secondary" onclick="clearForm()">
+                <i class="fas fa-redo-alt"></i> Resetează
+            </button>
+        </div>
+
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="fas fa-print"></i> Printează / Salvează PDF
+        </button>
+    </div>
+
+    <!-- Main Printable Sheet -->
+    <div class="page-sheet">
+        <div>
+            <!-- Header -->
+            <div class="doc-header">
+                <div class="company-title" contenteditable="true" id="companyName" onblur="saveState()">
+                    SC FIRMA SRL
+                </div>
+                <div style="text-align: right; font-size: 12px; color: #64748b;">
+                    Formular Intern
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="doc-title">
+                <h1>NECESAR MATERIALE</h1>
+            </div>
+
+            <!-- Meta Details -->
+            <div class="doc-meta">
+                <div class="meta-field">
+                    <span>Data:</span>
+                    <input type="text" id="docDate" placeholder="ZZ.LL.AAAA">
+                </div>
+                <div class="meta-field">
+                    <span>Departament / Şantier:</span>
+                    <input type="text" id="docDept" style="width: 200px;" placeholder="Ex: Proiect A / Producție">
+                </div>
+                <div class="meta-field">
+                    <span>Nr. Înregistrare:</span>
+                    <input type="text" id="docRef" style="width: 80px;" placeholder="001">
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table class="necesar-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 38px;">Nr.</th>
+                            <th>Denumire Produs / Material</th>
+                            <th style="width: 55px;">U.M.</th>
+                            <th style="width: 75px;">Cantitate</th>
+                            <th style="width: 160px;">Observații / Destinație</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Dynamic Rows Generated via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer Signatures -->
+        <div class="signatures-section">
+            <!-- Întocmit Block -->
+            <div class="sig-box">
+                <div class="sig-title">Întocmit:</div>
+                <input type="text" class="sig-name-input" id="sigIntocmit" placeholder="Nume şi Prenume" oninput="saveState()">
+                <div class="sig-line-area">Semnătura:</div>
+            </div>
+
+            <!-- Verificat Block -->
+            <div class="sig-box">
+                <div class="sig-title">Verificat:</div>
+                <input type="text" class="sig-name-input" id="sigVerificat" placeholder="Nume şi Prenume" oninput="saveState()">
+                <div class="sig-line-area">Semnătura:</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentRows = 18;
+
+        // Auto-expand textarea height dynamically as text grows onto new lines
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = (textarea.scrollHeight) + 'px';
+        }
+
+        // Render Table Rows dynamically
+        function renderTable(rows) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            for (let i = 1; i <= rows; i++) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="col-nr">${i}</td>
+                    <td class="col-produs">
+                        <textarea class="table-textarea" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+                    </td>
+                    <td class="col-um"><input type="text" class="table-input text-center"></td>
+                    <td class="col-cant"><input type="text" class="table-input text-center"></td>
+                    <td class="col-obs">
+                        <textarea class="table-textarea" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function changeRowCount(count) {
+            currentRows = parseInt(count, 10);
+            renderTable(currentRows);
+        }
+
+        // LocalStorage logic for persistent fields
+        function saveState() {
+            const companyName = document.getElementById('companyName').innerText;
+            const sigIntocmit = document.getElementById('sigIntocmit').value;
+            const sigVerificat = document.getElementById('sigVerificat').value;
+
+            localStorage.setItem('necesar_company', companyName);
+            localStorage.setItem('necesar_intocmit', sigIntocmit);
+            localStorage.setItem('necesar_verificat', sigVerificat);
+        }
+
+        function loadState() {
+            const companyName = localStorage.getItem('necesar_company');
+            const sigIntocmit = localStorage.getItem('necesar_intocmit');
+            const sigVerificat = localStorage.getItem('necesar_verificat');
+
+            if (companyName) document.getElementById('companyName').innerText = companyName;
+            if (sigIntocmit) document.getElementById('sigIntocmit').value = sigIntocmit;
+            if (sigVerificat) document.getElementById('sigVerificat').value = sigVerificat;
+
+            // Set default date to today
+            const today = new Date();
+            const dateStr = String(today.getDate()).padStart(2, '0') + '.' +
+                            String(today.getMonth() + 1).padStart(2, '0') + '.' +
+                            today.getFullYear();
+            document.getElementById('docDate').value = dateStr;
+        }
+
+        function clearForm() {
+            renderTable(currentRows);
+            document.getElementById('docDept').value = '';
+            document.getElementById('docRef').value = '';
+        }
+
+        // Initialize document
+        window.onload = function() {
+            renderTable(currentRows);
+            loadState();
+        };
+    </script>
+</body>
+</html>
