@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Necesar Materiale</title>
+    <style>
+        /* Variabile CSS & Reset */
+        :root {
+            --primary-color: #1e3a8a;
+            --border-color: #cbd5e1;
+            --border-dark: #334155;
+            --bg-hover: #f1f5f9;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: #0f172a;
+            background-color: #f8fafc;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .document-wrapper {
+            width: 100%;
+            max-width: 68rem;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Toolbar Controale (Se ascunde la Print) */
+        .ui-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 68rem;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.05s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e1;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Antet Document */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .doc-header h1 {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .meta-item label {
+            white-space: nowrap;
+            color: #475569;
+        }
+
+        .meta-item input {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.95rem;
+            outline: none;
+            background: #ffffff;
+        }
+
+        .meta-item input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+        }
+
+        /* Container Tabel */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            table-layout: fixed;
+            min-width: 600px; /* Asigură că tabelul nu se strivește pe ecrane mici */
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.4rem;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            text-align: center;
+            color: #1e293b;
+        }
+
+        /* Dimensiuni coloane reechilibrate (UM mărită) */
+        .col-nr { width: 6%; text-align: center; }
+        .col-produs { width: 38%; }
+        .col-cant { width: 10%; }
+        .col-um { width: 14%; } /* Mărită vizibil ca să încapă textul și să apară sageata/drop-down */
+        .col-termen { width: 16%; }
+        .col-obs { width: 16%; }
+
+        /* Stil inputuri din tabel: fără border-radius (colțuri drepte) */
+        table input {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 0 !important; /* Eliminat complet rotunjirea */
+            outline: none;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: #ffffff;
+            padding: 0.35rem 0.4rem;
+            color: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        table input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+        }
+
+        /* Container specific pentru inputul cu autocomplete */
+        .autocomplete-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Lista Autocomplete locală */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #94a3b8;
+            border-top: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 12rem;
+            overflow-y: auto;
+            border-radius: 0 0 0.375rem 0.375rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .autocomplete-list li {
+            padding: 0.4rem 0.6rem;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.3;
+            background: #ffffff;
+        }
+
+        .autocomplete-list li:hover,
+        .autocomplete-list li.selected {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Aliniere specifica */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+
+        /* Semnaturi sub tabel */
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            padding: 0 2rem;
+        }
+
+        .signature-box {
+            text-align: center;
+            width: 12rem;
+            border-top: 1px solid var(--border-dark);
+            padding-top: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        /* =========================================================
+           STILURI SPECIFICE PRINTARE (A4 Portrait)
+           ========================================================= */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 1cm;
+            }
+
+            body {
+                background: #ffffff;
+                padding: 0;
+                margin: 0;
+                color: #000000;
+            }
+
+            .ui-toolbar {
+                display: none !important;
+            }
+
+            .document-wrapper {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .doc-header h1 {
+                color: #000000;
+                font-size: 1.4rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .meta-item input {
+                border: none;
+                border-bottom: 1px solid #000000;
+                border-radius: 0;
+                padding: 0.2rem 0;
+            }
+
+            table {
+                font-size: 0.75rem;
+                min-width: auto;
+            }
+
+            th, td {
+                border: 1px solid #000000 !important;
+                padding: 0.2rem 0.3rem;
+            }
+
+            th {
+                background-color: #f2f2f2 !important;
+                color: #000000;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            table input {
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                padding: 0.1rem !important;
+                background: transparent !important;
+                font-size: 0.75rem;
+            }
+
+            .autocomplete-list {
+                display: none !important;
+            }
+
+            .signatures {
+                margin-top: 2rem;
+                padding: 0 1rem;
+                page-break-inside: avoid;
+            }
+
+            .signature-box {
+                border-top: 1px solid #000000;
+                color: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bară de controale UI -->
+    <div class="ui-toolbar">
+        <button class="btn btn-secondary" onclick="clearTable()">Curăță Tabelul</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Printează / Salvează PDF</button>
+    </div>
+
+    <!-- Documentul propriu-zis -->
+    <div class="document-wrapper">
+        <div class="doc-header">
+            <h1>NECESAR MATERIALE</h1>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <label for="meta-santier">Șantier / Obiectiv:</label>
+                    <input type="text" id="meta-santier">
+                </div>
+                <div class="meta-item">
+                    <label for="meta-data">Data:</label>
+                    <input type="date" id="meta-data">
+                </div>
+                <div class="meta-item">
+                    <label for="meta-solicitant">Solicitant:</label>
+                    <input type="text" id="meta-solicitant">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <!-- Datalist opțiuni Unități de Măsură -->
+            <datalist id="um-options">
+                <option value="buc"></option>
+                <option value="kg"></option>
+                <option value="l"></option>
+                <option value="sac"></option>
+                <option value="m"></option>
+                <option value="ml"></option>
+                <option value="rola"></option>
+                <option value="set"></option>
+            </datalist>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-nr">Nr.</th>
+                        <th class="col-produs">Denumire Produs</th>
+                        <th class="col-cant">Cant.</th>
+                        <th class="col-um">U.M.</th>
+                        <th class="col-termen">Termen Aprov.</th>
+                        <th class="col-obs">Observații</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Generat dinamic prin JS (24 rânduri) -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="signatures">
+            <div class="signature-box">Întocmit</div>
+            <div class="signature-box">Aprobat</div>
+        </div>
+    </div>
+
+    <!-- Script cu lista de produse -->
+    <script src="https://raw.githubusercontent.com/Troptrap/Necesare/refs/heads/main/produse.js"></script>
+
+    <script>
+        // Setare data curentă implicită
+        document.getElementById('meta-data').valueAsDate = new Date();
+
+        // Fallback dacă produse.js lipsește sau este invalid
+        if (!window.PRODUSE || !Array.isArray(window.PRODUSE)) {
+            window.PRODUSE = [];
+        }
+
+        const TOTAL_ROWS = 24;
+        const tableBody = document.getElementById('table-body');
+        
+        let activeInput = null;
+        let activeList = null;
+        let selectedIndex = -1;
+        let currentMatches = [];
+
+        // Inserare 24 rânduri
+        for (let i = 1; i <= TOTAL_ROWS; i++) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="col-nr">${i}</td>
+                <td class="col-produs">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" class="produs-input" autocomplete="off">
+                        <ul class="autocomplete-list" role="listbox"></ul>
+                    </div>
+                </td>
+                <td class="col-cant"><input type="number" step="any" class="text-right"></td>
+                <td class="col-um"><input type="text" list="um-options" value="buc" class="text-center"></td>
+                <td class="col-termen"><input type="text" class="text-center"></td>
+                <td class="col-obs"><input type="text"></td>
+            `;
+            tableBody.appendChild(tr);
+        }
+
+        // Normalizare text pentru căutare fără diacritice
+        function normalizeText(text) {
+            return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        // Gestionare input și filtrare
+        document.addEventListener('input', (e) => {
+            if (!e.target.classList.contains('produs-input')) return;
+
+            activeInput = e.target;
+            const wrapper = activeInput.closest('.autocomplete-wrapper');
+            activeList = wrapper.querySelector('.autocomplete-list');
+            
+            const rawQuery = activeInput.value.trim();
+
+            hideAllAutocomplete();
+
+            if (rawQuery.length < 2 || window.PRODUSE.length === 0) {
+                return;
+            }
+
+            const queryNorm = normalizeText(rawQuery);
+
+            currentMatches = window.PRODUSE.filter(p => {
+                const pNorm = normalizeText(p);
+                return pNorm.includes(queryNorm);
+            }).slice(0, 10);
+
+            if (currentMatches.length === 0) {
+                return;
+            }
+
+            showAutocomplete(currentMatches, activeList);
+        });
+
+        // Navigare tastatură în Autocomplete
+        document.addEventListener('keydown', (e) => {
+            if (!activeInput || !activeList || activeList.style.display !== 'block') return;
+
+            const items = activeList.querySelectorAll('li');
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex + 1) % items.length;
+                updateSelection(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                updateSelection(items);
+            } else if (e.key === 'Enter') {
+                if (selectedIndex >= 0 && selectedIndex < currentMatches.length) {
+                    e.preventDefault();
+                    selectProduct(currentMatches[selectedIndex]);
+                }
+            } else if (e.key === 'Escape' || e.key === 'Tab') {
+                hideAllAutocomplete();
+            }
+        });
+
+        function updateSelection(items) {
+            items.forEach((item, index) => {
+                if (index === selectedIndex) {
+                    item.classList.add('selected');
+                    item.scrollIntoView({ block: 'nearest' });
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        function showAutocomplete(matches, listElement) {
+            listElement.innerHTML = '';
+            selectedIndex = -1;
+
+            matches.forEach((item) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.addEventListener('mousedown', (ev) => {
+                    ev.preventDefault();
+                    selectProduct(item);
+                });
+                listElement.appendChild(li);
+            });
+
+            listElement.style.display = 'block';
+        }
+
+        function selectProduct(name) {
+            if (activeInput) {
+                activeInput.value = name;
+            }
+            hideAllAutocomplete();
+        }
+
+        function hideAllAutocomplete() {
+            document.querySelectorAll('.autocomplete-list').forEach(list => {
+                list.style.display = 'none';
+                list.innerHTML = '';
+            });
+            selectedIndex = -1;
+        }
+
+        // Ascundere dropdown la click în exterior
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.autocomplete-wrapper')) {
+                hideAllAutocomplete();
+            }
+        });
+
+        // Curățare tabel
+        function clearTable() {
+            if (confirm("Sigur dorești să ștergi toate datele introduse în tabel?")) {
+                const inputs = tableBody.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (input.getAttribute('list') === 'um-options') {
+                        input.value = 'buc';
+                    } else {
+                        input.value = '';
+                    }
+                });
+                hideAllAutocomplete();
+            }
+        }
+    </script>
+</body>
+</html>
