@@ -99,11 +99,26 @@
             margin-bottom: 1.2rem;
         }
 
-        .company-name {
+        /* Câmp Nume Firmă Editabil */
+        .company-name-input {
             font-weight: 700;
             font-size: 1.1rem;
             color: #1e293b;
             text-transform: uppercase;
+            border: 1px dashed var(--border-color);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.4rem;
+            width: 100%;
+            max-width: 16rem;
+            outline: none;
+            background: #f8fafc;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .company-name-input:focus,
+        .company-name-input:hover {
+            border-color: var(--primary-color);
+            background: #ffffff;
         }
 
         .doc-title-center {
@@ -270,34 +285,116 @@
         .text-center { text-align: center; }
         .text-right { text-align: right; }
 
-        /* Semnături și subsol document */
+        /* Subsol document - Coborât mai jos pentru loc de semnătură */
         .doc-footer {
-            margin-top: 2.5rem;
+            margin-top: 4.5rem; /* Coborât pentru loc generos de semnătură */
             padding: 0 1rem;
         }
 
         .signatures {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .signature-box-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 14rem;
+        }
+
+        /* Zona de Drop pentru Semnătură */
+        .sig-drop-zone {
+            width: 100%;
+            height: 4.5rem;
+            border: 1px dashed var(--border-color);
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            background-color: #fafafa;
+            transition: all 0.2s ease;
+            margin-bottom: 0.3rem;
+            overflow: hidden;
+        }
+
+        .sig-drop-zone:hover,
+        .sig-drop-zone.dragover {
+            border-color: var(--primary-color);
+            background-color: #eff6ff;
+        }
+
+        .sig-drop-zone .drop-hint {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+            padding: 0 0.5rem;
+            pointer-events: none;
+        }
+
+        .sig-drop-zone img.sig-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .sig-drop-zone.has-image img.sig-image {
+            display: block;
+        }
+
+        .sig-drop-zone.has-image .drop-hint {
+            display: none;
+        }
+
+        .sig-drop-zone.has-image {
+            border-style: solid;
+            border-color: transparent;
+            background-color: transparent;
+        }
+
+        .sig-remove-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(239, 68, 68, 0.85);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .sig-drop-zone.has-image:hover .sig-remove-btn {
+            display: flex;
         }
 
         .signature-box {
             text-align: center;
-            width: 12rem;
+            width: 100%;
             border-top: 1px solid var(--border-dark);
-            padding-top: 0.5rem;
+            padding-top: 0.4rem;
             font-weight: 600;
             font-size: 0.9rem;
             color: #1e293b;
         }
 
-        /* Data în jumătatea din stânga jos, coborâtă puțin pentru loc de semnătură */
+        /* Data în jumătatea din stânga jos */
         .date-container {
             display: flex;
             justify-content: flex-start;
-            padding-left: 1rem;
-            margin-top: 1.5rem;
+            padding-left: 0.5rem;
+            margin-top: 2rem;
         }
 
         .date-item {
@@ -350,7 +447,10 @@
                 padding: 0;
             }
 
-            .company-name {
+            .company-name-input {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
                 color: #000000;
                 font-size: 1rem;
             }
@@ -406,9 +506,21 @@
             }
 
             .doc-footer {
-                margin-top: 1.8rem;
+                margin-top: 3.5rem;
                 padding: 0 0.5rem;
                 page-break-inside: avoid;
+            }
+
+            /* Zone de semnătură la print */
+            .sig-drop-zone {
+                border: none !important;
+                background: transparent !important;
+                height: 4rem;
+            }
+
+            .sig-drop-zone .drop-hint,
+            .sig-remove-btn {
+                display: none !important;
             }
 
             .signature-box {
@@ -432,7 +544,7 @@
             <!-- Antet Superior: Stânga / Centru / Dreapta -->
             <div class="top-header-grid">
                 <div class="company-name">
-                    SC FIRMA SRL
+                    <input type="text" id="company-name-input" class="company-name-input" value="SC FIRMA SRL" title="Apasă pentru a edita numele firmei">
                 </div>
                 <div class="doc-title-center">
                     <h1>NECESAR MATERIALE</h1>
@@ -490,8 +602,27 @@
         <!-- Subsol: Semnături și Dată -->
         <div class="doc-footer">
             <div class="signatures">
-                <div class="signature-box">Întocmit</div>
-                <div class="signature-box">Verificat</div>
+                <!-- Caseta Întocmit -->
+                <div class="signature-box-wrapper">
+                    <div class="sig-drop-zone" id="zone-intocmit">
+                        <span class="drop-hint">Trage imagine PNG sau click pt încărcare</span>
+                        <img src="" alt="Semnătură Întocmit" class="sig-image" id="img-intocmit">
+                        <button type="button" class="sig-remove-btn" onclick="removeSignature(event, 'zone-intocmit', 'img-intocmit', 'file-intocmit')" title="Șterge semnătura">&times;</button>
+                        <input type="file" id="file-intocmit" accept="image/png, image/jpeg, image/webp" style="display: none;">
+                    </div>
+                    <div class="signature-box">Întocmit</div>
+                </div>
+
+                <!-- Caseta Verificat -->
+                <div class="signature-box-wrapper">
+                    <div class="sig-drop-zone" id="zone-verificat">
+                        <span class="drop-hint">Trage imagine PNG sau click pt încărcare</span>
+                        <img src="" alt="Semnătură Verificat" class="sig-image" id="img-verificat">
+                        <button type="button" class="sig-remove-btn" onclick="removeSignature(event, 'zone-verificat', 'img-verificat', 'file-verificat')" title="Șterge semnătura">&times;</button>
+                        <input type="file" id="file-verificat" accept="image/png, image/jpeg, image/webp" style="display: none;">
+                    </div>
+                    <div class="signature-box">Verificat</div>
+                </div>
             </div>
 
             <div class="date-container">
@@ -507,13 +638,26 @@
     <script src="produse.js"></script>
 
     <script>
+        // 1. Gestionare Nume Firmă editabil cu LocalStorage
+        const companyInput = document.getElementById('company-name-input');
+        const STORAGE_KEY_COMPANY = 'necesar_materiale_company_name';
+
+        const savedCompany = localStorage.getItem(STORAGE_KEY_COMPANY);
+        if (savedCompany !== null && savedCompany.trim() !== '') {
+            companyInput.value = savedCompany;
+        }
+
+        companyInput.addEventListener('input', () => {
+            localStorage.setItem(STORAGE_KEY_COMPANY, companyInput.value);
+        });
+
         // Setare dată curentă implicită
         document.getElementById('meta-data').valueAsDate = new Date();
 
         // Fallback dacă produse.js lipsește sau este invalid
         if (!window.PRODUSE || !Array.isArray(window.PRODUSE)) {
             window.PRODUSE = [];
-        }
+         }
 
         const TOTAL_ROWS = 24;
         const tableBody = document.getElementById('table-body');
@@ -542,7 +686,73 @@
             tableBody.appendChild(tr);
         }
 
-        // Normalizare text pentru căutare fără diacritice
+        // 2. Setup Drag & Drop / Click Upload pentru Semnături
+        setupSignatureZone('zone-intocmit', 'img-intocmit', 'file-intocmit');
+        setupSignatureZone('zone-verificat', 'img-verificat', 'file-verificat');
+
+        function setupSignatureZone(zoneId, imgId, fileInputId) {
+            const zone = document.getElementById(zoneId);
+            const img = document.getElementById(imgId);
+            const fileInput = document.getElementById(fileInputId);
+
+            zone.addEventListener('click', (e) => {
+                if (e.target.classList.contains('sig-remove-btn')) return;
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) handleSignatureFile(file, zone, img);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                zone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    zone.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                zone.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    zone.classList.remove('dragover');
+                }, false);
+            });
+
+            zone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const file = dt.files[0];
+                if (file) handleSignatureFile(file, zone, img);
+            });
+        }
+
+        function handleSignatureFile(file, zone, img) {
+            if (!file.type.startsWith('image/')) {
+                alert('Vă rugăm să selectați un fișier imagine (PNG, JPEG, WebP).');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+                zone.classList.add('has-image');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeSignature(event, zoneId, imgId, fileInputId) {
+            event.stopPropagation();
+            const zone = document.getElementById(zoneId);
+            const img = document.getElementById(imgId);
+            const fileInput = document.getElementById(fileInputId);
+
+            img.src = '';
+            fileInput.value = '';
+            zone.classList.remove('has-image');
+        }
+
+        // 3. Normalizare text pentru căutare fără diacritice
         function normalizeText(text) {
             return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
