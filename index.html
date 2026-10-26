@@ -156,7 +156,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .doc-title-main {
@@ -164,7 +164,7 @@
             font-weight: 900;
             letter-spacing: 0.8px;
             color: #0f172a;
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             text-transform: uppercase;
         }
 
@@ -172,13 +172,13 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
             align-items: center;
         }
 
         .header-input-row {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             gap: 6px;
             font-size: 13px;
@@ -189,23 +189,31 @@
             font-weight: 600;
             color: #334155;
             white-space: nowrap;
+            padding-top: 2px;
         }
 
-        .header-input-row input {
+        /* Textarea extensibil pentru Proiect și Contract */
+        .header-textarea {
             border: none;
             border-bottom: 1px solid #94a3b8;
             font-size: 13px;
             font-weight: 600;
+            font-family: inherit;
             color: #0f172a;
             padding: 2px 4px;
             outline: none;
             background: transparent;
             text-align: center;
             width: 65%;
+            resize: none;
+            overflow: hidden;
+            display: block;
+            line-height: 1.35;
+            min-height: 22px;
             transition: border-color 0.2s;
         }
 
-        .header-input-row input:focus {
+        .header-textarea:focus {
             border-bottom-color: #2563eb;
         }
 
@@ -436,7 +444,6 @@
             pointer-events: none;
         }
 
-        /* Ascunde textul și pictograma din dropzone dacă imaginea este încărcată în ecran normal */
         .sig-dropzone.has-image i,
         .sig-dropzone.has-image p {
             display: none !important;
@@ -520,6 +527,7 @@
 
             .company-title:hover, .company-title:focus,
             .header-input-row input,
+            .header-textarea,
             .approved-role-input,
             .sig-name-input,
             .date-section input {
@@ -527,13 +535,10 @@
                 background: transparent !important;
             }
 
-            /* CORECȚIE PRINT DROPZONE & SEMNĂTURI */
-            /* Dacă NU există imagine încărcată, ascunde complet zona dropzone la printare */
             .sig-dropzone:not(.has-image) {
                 display: none !important;
             }
 
-            /* Dacă există imagine, elimină fundalul și bordura și păstrează doar imaginea */
             .sig-dropzone.has-image {
                 border: none !important;
                 background: transparent !important;
@@ -610,11 +615,11 @@
                     <div class="header-meta-group">
                         <div class="header-input-row">
                             <label for="projectName">Denumire proiect:</label>
-                            <input type="text" id="projectName" placeholder="Ex: Amenajare Spațiu Commercial" oninput="saveState()">
+                            <textarea id="projectName" class="header-textarea" rows="1" placeholder="Ex: Amenajare Spațiu Comercial" oninput="handleMetaInput(this)"></textarea>
                         </div>
                         <div class="header-input-row">
                             <label for="contractRef">Nr. / Data contract:</label>
-                            <input type="text" id="contractRef" placeholder="Ex: 104 / 12.02.2026" oninput="saveState()">
+                            <textarea id="contractRef" class="header-textarea" rows="1" placeholder="Ex: 104 / 12.02.2026" oninput="handleMetaInput(this)"></textarea>
                         </div>
                     </div>
                 </div>
@@ -754,6 +759,11 @@
         function autoResizeTextarea(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = Math.max(18, textarea.scrollHeight) + 'px';
+        }
+
+        function handleMetaInput(textarea) {
+            autoResizeTextarea(textarea);
+            saveState();
         }
 
         function renderTable(rows) {
@@ -978,10 +988,14 @@
                 document.getElementById('companyName').innerText = localStorage.getItem('necesar_company');
             }
             if (localStorage.getItem('necesar_project')) {
-                document.getElementById('projectName').value = localStorage.getItem('necesar_project');
+                const proj = document.getElementById('projectName');
+                proj.value = localStorage.getItem('necesar_project');
+                autoResizeTextarea(proj);
             }
             if (localStorage.getItem('necesar_contract')) {
-                document.getElementById('contractRef').value = localStorage.getItem('necesar_contract');
+                const contr = document.getElementById('contractRef');
+                contr.value = localStorage.getItem('necesar_contract');
+                autoResizeTextarea(contr);
             }
             if (localStorage.getItem('necesar_approved_role')) {
                 document.getElementById('approvedRole').value = localStorage.getItem('necesar_approved_role');
